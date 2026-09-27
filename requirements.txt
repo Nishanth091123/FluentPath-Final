@@ -1,0 +1,19 @@
+streamlit==1.64.0
+SQLAlchemy==2.0.54
+requests>=2.31,<3
+python-dotenv>=1.0,<2
+streamlit-webrtc>=0.47,<1
+SpeechRecognition>=3.10,<4
+opencv-python-headless==4.10.0.84
+av>=12,<16
+pg8000>=1.31,<2
+
+# AI orchestration stack
+langchain==1.4.2
+langchain-core==1.6.5
+langchain-openrouter==0.2.9
+langgraph==1.2.12
+langgraph-checkpoint==4.2.0
+langgraph-prebuilt==1.1.0
+langgraph-sdk==0.4.5
+openrouter==0.11.46

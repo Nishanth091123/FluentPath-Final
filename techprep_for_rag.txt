@@ -1,0 +1,691 @@
+5360:             st.session_state.interview_history = []
+5361:             st.session_state.interview_feedback = ""
+5362:             st.session_state.interview_count = 0
+5363:             st.session_state.final_interview_report = ""
+5364:             st.session_state["step5_interview_scores"] = []
+5365:             st.session_state["step5_interview_reports"] = []
+5366:             st.session_state["step5_interview_questions"] = []
+5367:             st.rerun()
+5368: 
+5369: 
+5370: 
+5371: # ============================================================
+5372: # TECHPREP - TECHNICAL INTERVIEW PREPARATION
+5373: # ============================================================
+5374: 
+5375: elif page == "🧑‍💻 TechPrep":
+5376: 
+5377:     friendly_coach_message("🧑‍💻 TechPrep")
+5378: 
+5379:     st.title("🧑‍💻 TechPrep")
+5380:     st.caption(
+5381:         "Know → Understand → Structure → Say → Improve"
+5382:     )
+5383: 
+5384:     st.info(
+5385:         "Choose a technical topic and practise important interview questions. "
+5386:         "Understand the concept first, then build a clear interview answer."
+5387:     )
+5388: 
+5389:     # --------------------------------------------------------
+5390:     # QUESTION BANKS
+5391:     # --------------------------------------------------------
+5392: 
+5393:     techprep_banks = {
+5394: 
+5395:         "Python": [
+5396:             "What is Python and why is it widely used?",
+5397:             "What is the difference between a list, tuple, set and dictionary in Python?",
+5398:             "What is the difference between mutable and immutable objects in Python?",
+5399:             "What is the difference between == and is in Python?",
+5400:             "What are *args and **kwargs in Python?",
+5401:             "What is list comprehension and when would you use it?",
+5402:             "How does exception handling work in Python?",
+5403:             "Explain functions and lambda functions in Python.",
+5404:             "What are the main OOP concepts in Python?",
+5405:             "What is the difference between an iterator and a generator?"
+5406:         ],
+5407: 
+5408:         "Machine Learning": [
+5409:             "What is Machine Learning and how is it related to Artificial Intelligence?",
+5410:             "What is the difference between supervised and unsupervised learning?",
+5411:             "What is the difference between regression and classification?",
+5412:             "What are overfitting and underfitting, and how can they be handled?",
+5413:             "Why do we split data into training, validation and testing datasets?",
+5414:             "What is the bias-variance tradeoff?",
+5415:             "What are feature engineering and feature selection?",
+5416:             "How would you handle missing values, outliers and feature scaling?",
+5417:             "Explain accuracy, precision, recall and F1 score.",
+5418:             "What is cross-validation and how do you select the best model?"
+5419:         ],
+5420: 
+5421:         "Data Science": [
+5422:             "What is Data Science and what are the main stages of a Data Science project?",
+5423:             "What is Exploratory Data Analysis and why is it important?",
+5424:             "How do you clean a real-world dataset before analysis?",
+5425:             "What is the difference between structured and unstructured data?",
+5426:             "How would you handle missing values in a dataset?",
+5427:             "How do you identify and handle outliers?",
+5428:             "What is feature engineering and why is it useful?",
+5429:             "What is the difference between correlation and causation?",
+5430:             "How do you evaluate whether a Data Science solution is performing well?",
+5431:             "How would you communicate Data Science insights to a non-technical stakeholder?"
+5432:         ],
+5433: 
+5434:         "Statistics": [
+5435:             "What is the difference between mean, median and mode?",
+5436:             "What are variance and standard deviation?",
+5437:             "What is probability and why is it important in Data Science?",
+5438:             "What is a normal distribution?",
+5439:             "What is the difference between a population and a sample?",
+5440:             "What is hypothesis testing?",
+5441:             "What is a p-value and how is it interpreted?",
+5442:             "What is a confidence interval?",
+5443:             "What is the difference between covariance and correlation?",
+5444:             "What are Type I and Type II errors?"
+5445:         ],
+5446: 
+5447:         "SQL": [
+5448:             "What is SQL and what is a relational database?",
+5449:             "What is the difference between WHERE and HAVING?",
+5450:             "Explain INNER JOIN, LEFT JOIN, RIGHT JOIN and FULL JOIN.",
+5451:             "What is GROUP BY and how is it used with aggregate functions?",
+5452:             "What is the difference between a subquery and a CTE?",
+5453:             "What are primary keys and foreign keys?",
+5454:             "What is database normalization?",
+5455:             "What are SQL window functions?",
+5456:             "What is an index and how can it improve query performance?",
+5457:             "How would you find duplicate records in a SQL table?"
+5458:         ],
+5459: 
+5460:         "Power BI": [
+5461:             "What is Power BI and what are its main components?",
+5462:             "What is the difference between Power Query and DAX?",
+5463:             "What is the difference between a measure and a calculated column?",
+5464:             "How do relationships and cardinality work in Power BI?",
+5465:             "What is a star schema and why is it useful?",
+5466:             "What is filter context in DAX?",
+5467:             "Which common DAX functions have you used?",
+5468:             "How does data refresh work in Power BI?",
+5469:             "What are the key principles of designing an effective Power BI dashboard?",
+5470:             "How would you improve the performance of a slow Power BI report?"
+5471:         ],
+5472: 
+5473:         "Excel": [
+5474:             "What is the difference between VLOOKUP and XLOOKUP?",
+5475:             "How do INDEX and MATCH work together?",
+5476:             "What is a PivotTable and when would you use it?",
+5477:             "How do IF and IFS functions work?",
+5478:             "What are SUMIFS and COUNTIFS used for?",
+5479:             "How would you clean a dataset in Excel?",
+5480:             "What is conditional formatting and when is it useful?",
+5481:             "How would you build a simple dashboard in Excel?",
+5482:             "What is the difference between relative and absolute cell references?",
+5483:             "What is Power Query in Excel and why is it useful?"
+5484:         ],
+5485: 
+5486:         "Artificial Intelligence": [
+5487:             "What is Artificial Intelligence?",
+5488:             "What is the difference between AI, Machine Learning and Deep Learning?",
+5489:             "What is the difference between narrow AI and general AI?",
+5490:             "What are some common real-world applications of AI?",
+5491:             "What is the difference between training and inference in an AI system?",
+5492:             "How are NLP and Computer Vision used in AI?",
+5493:             "What are bias and responsible AI?",
+5494:             "What are some important limitations of AI systems?",
+5495:             "How can the performance of an AI solution be evaluated?",
+5496:             "What are the main stages of an AI project from business problem to deployment?"
+5497:         ],
+5498: 
+5499:         "Deep Learning": [
+5500:             "What is Deep Learning and how is it different from traditional Machine Learning?",
+5501:             "What is an artificial neural network?",
+5502:             "What are neurons, weights and biases in a neural network?",
+5503:             "What are forward propagation and backpropagation?",
+5504:             "What are activation functions and why are they needed?",
+5505:             "What are a loss function and an optimizer?",
+5506:             "What is a Convolutional Neural Network?",
+5507:             "What are RNNs and LSTMs?",
+5508:             "What is dropout and how does it help reduce overfitting?",
+5509:             "What is transfer learning?"
+5510:         ],
+5511: 
+5512:         "NLP": [
+5513:             "What is Natural Language Processing and where is it used?",
+5514:             "What is tokenization?",
+5515:             "What are stop-word removal, stemming and lemmatization?",
+5516:             "What are Bag of Words and TF-IDF?",
+5517:             "What are word embeddings?",
+5518:             "What is sentiment analysis?",
+5519:             "What is Named Entity Recognition?",
+5520:             "How are transformers used in NLP?",
+5521:             "What is the attention mechanism?",
+5522:             "What are some common challenges when building NLP systems?"
+5523:         ],
+5524: 
+5525:         "Generative AI": [
+5526:             "What is Generative AI?",
+5527:             "What is a Large Language Model?",
+5528:             "What is a transformer model at a high level?",
+5529:             "What is prompt engineering?",
+5530:             "What are tokens and a context window?",
+5531:             "What does temperature control in a generative AI model?",
+5532:             "What is an AI hallucination and how can it be reduced?",
+5533:             "What is Retrieval-Augmented Generation?",
+5534:             "What is the difference between prompting, RAG and fine-tuning?",
+5535:             "What are embeddings and vector databases, and how are they used in Generative AI?"
+5536:         ],
+5537: 
+5538:         "Project Questions": [
+5539:             "Explain the problem statement of one of your projects.",
+5540:             "What was the objective and business value of your project?",
+5541:             "What data did you use and where did it come from?",
+5542:             "How did you clean and preprocess the data?",
+5543:             "What technologies, algorithms or models did you use and why?",
+5544:             "What was the biggest challenge in your project and how did you solve it?",
+5545:             "How did you evaluate the performance of your solution?",
+5546:             "How did you convert your model or analysis into a usable application?",
+5547:             "What result or practical value did the project provide?",
+5548:             "What would you improve if you developed the project again?"
+5549:         ]
+5550:     }
+5551: 
+5552:     topic_options = list(techprep_banks.keys()) + ["Custom"]
+5553: 
+5554:     # --------------------------------------------------------
+5555:     # TOPIC
+5556:     # --------------------------------------------------------
+5557: 
+5558:     selected_topic = st.selectbox(
+5559:         "📚 Choose Technical Topic",
+5560:         topic_options,
+5561:         key="techprep_topic"
+5562:     )
+5563: 
+5564:     if selected_topic == "Custom":
+5565: 
+5566:         custom_topic = st.text_input(
+5567:             "Enter your topic",
+5568:             key="techprep_custom_topic",
+5569:             placeholder="Example: Time Series Forecasting"
+5570:         )
+5571: 
+5572:         selected_question = st.text_area(
+5573:             "Enter your interview question",
+5574:             key="techprep_custom_question",
+5575:             height=100,
+5576:             placeholder="Type the technical question you want to practise..."
+5577:         )
+5578: 
+5579:         effective_topic = custom_topic.strip() or "Custom"
+5580: 
+5581:     else:
+5582: 
+5583:         effective_topic = selected_topic
+5584: 
+5585:         questions = techprep_banks[selected_topic]
+5586: 
+5587:         question_number = st.selectbox(
+5588:             "🎯 Choose Question",
+5589:             range(1, 11),
+5590:             format_func=lambda x: f"Question {x}",
+5591:             key="techprep_question_number"
+5592:         )
+5593: 
+5594:         selected_question = questions[question_number - 1]
+5595: 
+5596:         st.markdown("### Interview Question")
+5597:         st.info(selected_question)
+5598: 
+5599:         st.caption(
+5600:             f"Question {question_number} of 10 • {selected_topic}"
+5601:         )
+5602: 
+5603:     # --------------------------------------------------------
+5604:     # SESSION CACHE
+5605:     # --------------------------------------------------------
+5606: 
+5607:     current_key = f"{effective_topic}::{selected_question}".strip()
+5608: 
+5609:     if st.session_state.get("techprep_current_key") != current_key:
+5610:         st.session_state["techprep_current_key"] = current_key
+5611:         st.session_state["techprep_learning_report"] = ""
+5612:         st.session_state["techprep_practice_report"] = ""
+5613:         st.session_state["techprep_practice_score"] = None
+5614:         st.session_state["techprep_concept_report"] = ""
+5615: 
+5616:     # --------------------------------------------------------
+5617:     # LEARN
+5618:     # --------------------------------------------------------
+5619: 
+5620:     st.markdown("---")
+5621:     st.markdown("## 🧠 Learn the Answer")
+5622: 
+5623:     st.caption(
+5624:         "Generate the explanation only when you need it. "
+5625:         "This keeps TechPrep focused and easy to revise."
+5626:     )
+5627: 
+5628:     if st.button(
+5629:         "✨ Explain This Question",
+5630:         use_container_width=True,
+5631:         key="techprep_generate_learning"
+5632:     ):
+5633: 
+5634:         if not selected_question.strip():
+5635:             st.warning("Enter a question first.")
+5636: 
+5637:         else:
+5638:             learning_system = """
+5639: You are TechPrep, a technical interview learning coach.
+5640: 
+5641: The learner is preparing for technical interviews.
+5642: 
+5643: For the given topic and question, teach the concept accurately and
+5644: practically.
+5645: 
+5646: Use exactly these sections:
+5647: 
+5648: ## தமிழ் விளக்கம்
+5649: Explain the concept in simple, clear Tamil.
+5650: Keep standard technical terms such as Python, Machine Learning, SQL,
+5651: API, model, dataset and algorithm in English when appropriate.
+5652: 
+5653: ## Simple Interview English
+5654: Give a short, natural answer that a learner can comfortably speak in
+5655: an interview. Use simple English. Do not make it sound memorized.
+5656: 
+5657: ## Professional Interview Answer
+5658: Give a stronger professional answer with correct technical points.
+5659: Keep it interview-friendly and reasonably concise.
+5660: 
+5661: ## Key Points to Remember
+5662: Give 4 to 6 short revision points.
+5663: 
+5664: Important:
+5665: - Do not invent the learner's personal experience.
+5666: - For project questions, give an answer structure/template unless the
+5667:   learner has supplied real project details.
+5668: - Keep technical information accurate.
+5669: - Do not add fake tools, results, percentages or achievements.
+5670: """
+5671: 
+5672:             learning_user = f"""
+5673: Topic:
+5674: {effective_topic}
+5675: 
+5676: Interview Question:
+5677: {selected_question}
+5678: """
+5679: 
+5680:             with st.spinner("TechPrep AI is preparing your answer..."):
+5681:                 try:
+5682:                     learning_report = ask_ai(
+5683:                         learning_system,
+5684:                         learning_user
+5685:                     )
+5686: 
+5687:                     st.session_state[
+5688:                         "techprep_learning_report"
+5689:                     ] = learning_report
+5690: 
+5691:                 except Exception as e:
+5692:                     st.error(
+5693:                         f"AI response could not be generated: {e}"
+5694:                     )
+5695: 
+5696:     learning_report = st.session_state.get(
+5697:         "techprep_learning_report",
+5698:         ""
+5699:     )
+5700: 
+5701:     if learning_report:
+5702:         st.markdown(learning_report)
+5703: 
+5704:     # --------------------------------------------------------
+5705:     # I KNOW THE CONCEPT
+5706:     # --------------------------------------------------------
+5707: 
+5708:     st.markdown("---")
+5709:     st.markdown("## 💡 I Know the Concept")
+5710: 
+5711:     st.caption(
+5712:         "Explain what you know in Tamil, English, or mixed language. "
+5713:         "TechPrep will help you convert your idea into an interview answer."
+5714:     )
+5715: 
+5716:     concept_reset = st.session_state.get(
+5717:         "techprep_concept_reset",
+5718:         0
+5719:     )
+5720: 
+5721:     concept_text = st.text_area(
+5722:         "Explain the concept in your own words",
+5723:         height=170,
+5724:         key=f"techprep_concept_text_{concept_reset}",
+5725:         placeholder=(
+5726:             "Tamil / English / mixed language — explain what you understand..."
+5727:         )
+5728:     )
+5729: 
+5730:     c1, c2 = st.columns(2)
+5731: 
+5732:     with c1:
+5733:         concept_submit = st.button(
+5734:             "🧠 Structure My Concept",
+5735:             use_container_width=True,
+5736:             key="techprep_structure_concept"
+5737:         )
+5738: 
+5739:     with c2:
+5740:         if st.button(
+5741:             "🗑️ Clear Concept",
+5742:             use_container_width=True,
+5743:             key="techprep_clear_concept"
+5744:         ):
+5745:             st.session_state["techprep_concept_reset"] = (
+5746:                 concept_reset + 1
+5747:             )
+5748:             st.session_state["techprep_concept_report"] = ""
+5749:             st.rerun()
+5750: 
+5751:     if concept_submit:
+5752: 
+5753:         if not concept_text.strip():
+5754:             st.warning(
+5755:                 "Explain what you know first. Tamil or simple English is fine."
+5756:             )
+5757: 
+5758:         elif not selected_question.strip():
+5759:             st.warning("Choose or enter an interview question first.")
+5760: 
+5761:         else:
+5762:             concept_system = """
+5763: You are a supportive technical interview coach.
+5764: 
+5765: The learner may explain a technical concept in Tamil, English,
+5766: broken English, or a mixture of languages.
+5767: 
+5768: Do not reject Tamil.
+5769: 
+5770: First understand the learner's intended technical idea.
+5771: Do not invent experience or achievements.
+5772: 
+5773: Use exactly these sections:
+5774: 
+5775: ## What You Already Understand
+5776: Briefly identify the correct ideas in the learner's explanation.
+5777: 
+5778: ## Important Correction
+5779: Correct technical misunderstandings clearly and respectfully.
+5780: If there is no major technical mistake, say that the core idea is correct.
+5781: 
+5782: ## Simple Interview English
+5783: Convert the learner's idea into natural, simple spoken English.
+5784: 
+5785: ## Professional Version
+5786: Give a technically accurate and professional interview version.
+5787: 
+5788: ## Missing Point
+5789: Mention only the most useful missing technical points.
+5790: 
+5791: Keep the response practical and concise.
+5792: """
+5793: 
+5794:             concept_user = f"""
+5795: Topic:
+5796: {effective_topic}
+5797: 
+5798: Interview Question:
+5799: {selected_question}
+5800: 
+5801: Learner's Own Explanation:
+5802: {concept_text}
+5803: """
+5804: 
+5805:             with st.spinner(
+5806:                 "TechPrep AI is structuring your concept..."
+5807:             ):
+5808:                 try:
+5809:                     concept_report = ask_ai(
+5810:                         concept_system,
+5811:                         concept_user
+5812:                     )
+5813: 
+5814:                     st.session_state[
+5815:                         "techprep_concept_report"
+5816:                     ] = concept_report
+5817: 
+5818:                 except Exception as e:
+5819:                     st.error(
+5820:                         f"AI response could not be generated: {e}"
+5821:                     )
+5822: 
+5823:     concept_report = st.session_state.get(
+5824:         "techprep_concept_report",
+5825:         ""
+5826:     )
+5827: 
+5828:     if concept_report:
+5829:         st.markdown(concept_report)
+5830: 
+5831:     # --------------------------------------------------------
+5832:     # PRACTICE
+5833:     # --------------------------------------------------------
+5834: 
+5835:     st.markdown("---")
+5836:     st.markdown("## 🎤 Practice This Answer")
+5837: 
+5838:     st.caption(
+5839:         "Answer in English as you would in an interview. "
+5840:         "Your answer does not need to be perfect."
+5841:     )
+5842: 
+5843:     practice_reset = st.session_state.get(
+5844:         "techprep_practice_reset",
+5845:         0
+5846:     )
+5847: 
+5848:     practice_answer = st.text_area(
+5849:         "Your Interview Answer",
+5850:         height=220,
+5851:         key=f"techprep_practice_answer_{practice_reset}",
+5852:         placeholder=(
+5853:             "Type your answer in your own words..."
+5854:         )
+5855:     )
+5856: 
+5857:     p1, p2 = st.columns(2)
+5858: 
+5859:     with p1:
+5860:         analyze_practice = st.button(
+5861:             "🤖 Analyze My Answer",
+5862:             use_container_width=True,
+5863:             key="techprep_analyze_practice"
+5864:         )
+5865: 
+5866:     with p2:
+5867:         if st.button(
+5868:             "🔄 Try Again",
+5869:             use_container_width=True,
+5870:             key="techprep_retry"
+5871:         ):
+5872:             st.session_state["techprep_practice_reset"] = (
+5873:                 practice_reset + 1
+5874:             )
+5875:             st.session_state["techprep_practice_report"] = ""
+5876:             st.session_state["techprep_practice_score"] = None
+5877:             st.rerun()
+5878: 
+5879:     if analyze_practice:
+5880: 
+5881:         if not practice_answer.strip():
+5882:             st.warning(
+5883:                 "Write a short interview answer first."
+5884:             )
+5885: 
+5886:         elif not selected_question.strip():
+5887:             st.warning(
+5888:                 "Choose or enter an interview question first."
+5889:             )
+5890: 
+5891:         else:
+5892:             practice_system = """
+5893: You are TechPrep, a technical interview evaluator.
+5894: 
+5895: Evaluate only the learner's written answer to the given technical
+5896: interview question.
+5897: 
+5898: Score these five areas:
+5899: 1. Concept Coverage - 20
+5900: 2. Technical Accuracy - 20
+5901: 3. English Clarity - 20
+5902: 4. Answer Structure - 20
+5903: 5. Interview Relevance - 20
+5904: 
+5905: Total = 100.
+5906: 
+5907: Do not evaluate pronunciation, accent, voice quality or speaking speed.
+5908: 
+5909: Use exactly this format:
+5910: 
+5911: ## TechPrep Score
+5912: Total Score: <0-100>/100
+5913: 
+5914: - Concept Coverage: <0-20>/20
+5915: - Technical Accuracy: <0-20>/20
+5916: - English Clarity: <0-20>/20
+5917: - Answer Structure: <0-20>/20
+5918: - Interview Relevance: <0-20>/20
+5919: 
+5920: ## What Was Good
+5921: Give the strongest points briefly.
+5922: 
+5923: ## Technical Correction
+5924: Correct any inaccurate technical statement.
+5925: If there is no major technical error, state that clearly.
+5926: 
+5927: ## Missing Points
+5928: Give only useful missing points.
+5929: 
+5930: ## Better Answer
+5931: Rewrite the learner's answer in clear, natural interview English.
+5932: Preserve the learner's intended meaning and do not invent personal
+5933: experience.
+5934: 
+5935: ## Next Practice
+5936: Give one short action for the next attempt.
+5937: """
+5938: 
+5939:             practice_user = f"""
+5940: Topic:
+5941: {effective_topic}
+5942: 
+5943: Interview Question:
+5944: {selected_question}
+5945: 
+5946: Learner Answer:
+5947: {practice_answer}
+5948: """
+5949: 
+5950:             with st.spinner(
+5951:                 "TechPrep AI is analyzing your answer..."
+5952:             ):
+5953:                 try:
+5954:                     practice_report = ask_ai(
+5955:                         practice_system,
+5956:                         practice_user
+5957:                     )
+5958: 
+5959:                     import re
+5960: 
+5961:                     score_patterns = [
+5962:                         r"Total Score:\s*(\d{1,3})\s*/\s*100",
+5963:                         r"Total Score:\s*(\d{1,3})%",
+5964:                         r"TechPrep Score:\s*(\d{1,3})"
+5965:                     ]
+5966: 
+5967:                     techprep_score = None
+5968: 
+5969:                     for pattern in score_patterns:
+5970:                         match = re.search(
+5971:                             pattern,
+5972:                             practice_report,
+5973:                             re.IGNORECASE
+5974:                         )
+5975:                         if match:
+5976:                             techprep_score = int(
+5977:                                 match.group(1)
+5978:                             )
+5979:                             break
+5980: 
+5981:                     if techprep_score is None:
+5982:                         techprep_score = 0
+5983: 
+5984:                     techprep_score = max(
+5985:                         0,
+5986:                         min(100, techprep_score)
+5987:                     )
+5988: 
+5989:                     st.session_state[
+5990:                         "techprep_practice_report"
+5991:                     ] = practice_report
+5992: 
+5993:                     st.session_state[
+5994:                         "techprep_practice_score"
+5995:                     ] = techprep_score
+5996: 
+5997:                     try:
+5998:                         save_activity(
+5999:                             activity_type="TechPrep",
+6000:                             activity=(
+6001:                                 f"{effective_topic} - "
+6002:                                 f"{selected_question[:80]}"
+6003:                             ),
+6004:                             score=techprep_score,
+6005:                             review_data={
+6006:                                 "title": (
+6007:                                     f"TechPrep - {effective_topic}"
+6008:                                 ),
+6009:                                 "question": selected_question,
+6010:                                 "answer": practice_answer,
+6011:                                 "feedback": practice_report,
+6012:                                 "score": techprep_score
+6013:                             }
+6014:                         )
+6015:                     except TypeError:
+6016:                         # Compatibility with older save_activity signature.
+6017:                         save_activity(
+6018:                             activity_type="TechPrep",
+6019:                             activity=(
+6020:                                 f"{effective_topic} - "
+6021:                                 f"{selected_question[:80]}"
+6022:                             ),
+6023:                             score=techprep_score
+6024:                         )
+6025: 
+6026:                 except Exception as e:
+6027:                     st.error(
+6028:                         f"AI analysis could not be completed: {e}"
+6029:                     )
+6030: 
+6031:     practice_report = st.session_state.get(
+6032:         "techprep_practice_report",
+6033:         ""
+6034:     )
+6035: 
+6036:     practice_score = st.session_state.get(
+6037:         "techprep_practice_score"
+6038:     )
+6039: 
+6040:     if practice_report:
+6041: 
+6042:         st.markdown("### 📊 TechPrep Feedback")
+6043: 
+6044:         if practice_score is not None:
+6045:             st.metric(
+6046:                 "Technical Interview Practice Score",
+6047:                 f"{practice_score}%"
+6048:             )
+6049: 
+6050:         st.markdown(practice_report)
