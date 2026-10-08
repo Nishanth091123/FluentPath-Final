@@ -633,7 +633,14 @@ def show_english_voice_message():
 # DATABASE
 # ============================================================
 
-Base.metadata.create_all(bind=engine)
+
+from sqlalchemy import text
+
+with engine.begin() as conn:
+    if engine.dialect.name == "postgresql":
+        conn.execute(text("SELECT pg_advisory_xact_lock(72638142)"))
+    Base.metadata.create_all(bind=conn)
+  
 
 
 
