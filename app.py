@@ -54,7 +54,7 @@ class ActivityReview(Base):
     __table_args__ = {"extend_existing": True}
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    activity_log_id = Column(Integer, nullable=False, index=True, unique=True)
+    activity_log_id = Column(Integer, nullable=False, unique=True)
     user_id = Column(String(50), nullable=False, index=True)
     activity_type = Column(String(50), nullable=False, index=True)
     review_json = Column(Text, nullable=False)
