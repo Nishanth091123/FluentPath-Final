@@ -8,7 +8,7 @@ opencv-python-headless==4.10.0.84
 av>=12,<16
 
 # Database driver
-pg8000>=1.31.5
+psycopg2-binary>=2.9
 scramp>=1.4.6
 
 # AI orchestration stack
